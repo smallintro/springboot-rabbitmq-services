@@ -1,7 +1,7 @@
-package io.github.smallintro.orderprocessor.controller;
+package io.github.smallintro.rabbitmq.paymentprocessor.controller;
 
-import io.github.smallintro.orderprocessor.model.PaymentInfo;
-import io.github.smallintro.orderprocessor.rabbitmq.RabbitMQProducer;
+import io.github.smallintro.rabbitmq.paymentprocessor.model.PaymentInfo;
+import io.github.smallintro.rabbitmq.paymentprocessor.service.RabbitMqProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class PaymentOrderController {
     private static final Logger logger = LoggerFactory.getLogger(PaymentOrderController.class);
 
     @Autowired
-    RabbitMQProducer messagePublisher;
+    RabbitMqProducer messagePublisher;
 
     @PostMapping("/payment/{request_id}")
     public ResponseEntity postPayment(@PathVariable("request_id") final String requestId, @RequestBody PaymentInfo paymentInfo) {

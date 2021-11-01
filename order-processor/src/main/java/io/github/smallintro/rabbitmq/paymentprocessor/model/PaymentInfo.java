@@ -1,4 +1,4 @@
-package io.github.smallintro.orderprocessor.model;
+package io.github.smallintro.rabbitmq.paymentprocessor.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.validation.annotation.Validated;
 
 @Data
 @NoArgsConstructor

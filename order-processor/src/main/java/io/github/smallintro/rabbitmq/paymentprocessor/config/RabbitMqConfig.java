@@ -1,6 +1,6 @@
-package io.github.smallintro.orderprocessor.config;
+package io.github.smallintro.rabbitmq.paymentprocessor.config;
 
-import io.github.smallintro.orderprocessor.constant.RabbitMQConstants;
+import io.github.smallintro.rabbitmq.paymentprocessor.constant.RabbitMqConstants;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.AnonymousQueue;
 import org.springframework.amqp.core.Binding;
@@ -21,7 +21,7 @@ import org.springframework.context.annotation.Configuration;
  * Configuration is same for producer and consumer
  */
 @Configuration
-public class RabbitMQConfig {
+public class RabbitMqConfig {
     @Bean
     public Queue queue() {
         // this queue will be created with random name by amqp and will be auto deleted
@@ -31,51 +31,51 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue queueAlpha() {
-        return new Queue(RabbitMQConstants.Queue.ALPHA, false);
+        return new Queue(RabbitMqConstants.Queue.ALPHA, false);
     }
 
     @Bean
     public Queue queueBeta() {
-        return new Queue(RabbitMQConstants.Queue.BETA, false);
+        return new Queue(RabbitMqConstants.Queue.BETA, false);
     }
 
     @Bean
     public Queue queueDefault() {
-        return new Queue(RabbitMQConstants.Queue.DEFAULT);
+        return new Queue(RabbitMqConstants.Queue.DEFAULT);
     }
 
     @Bean
     public DirectExchange directExchange() {
-        return new DirectExchange(RabbitMQConstants.Exchange.DIRECT);
+        return new DirectExchange(RabbitMqConstants.Exchange.DIRECT);
     }
 
     @Bean
     public FanoutExchange fanoutExchange() {
-        return new FanoutExchange(RabbitMQConstants.Exchange.FANOUT);
+        return new FanoutExchange(RabbitMqConstants.Exchange.FANOUT);
     }
 
     @Bean
     public TopicExchange topicExchange() {
-        return new TopicExchange(RabbitMQConstants.Exchange.TOPIC);
+        return new TopicExchange(RabbitMqConstants.Exchange.TOPIC);
     }
 
     @Bean
     public HeadersExchange headersExchange() {
-        return new HeadersExchange(RabbitMQConstants.Exchange.HEADER);
+        return new HeadersExchange(RabbitMqConstants.Exchange.HEADER);
     }
 
     @Bean
     public Binding bindingAlphaQDirectEx(Queue queueAlpha, DirectExchange directExchange) {
         return BindingBuilder.bind(queueAlpha)
                 .to(directExchange)
-                .with(RabbitMQConstants.getRoutingKey(RabbitMQConstants.Exchange.DIRECT, RabbitMQConstants.Queue.ALPHA));
+                .with(RabbitMqConstants.getRoutingKey(RabbitMqConstants.Exchange.DIRECT, RabbitMqConstants.Queue.ALPHA));
     }
 
     @Bean
     public Binding bindingBetaQDirectEx(Queue queueBeta, DirectExchange directExchange) {
         return BindingBuilder.bind(queueBeta)
                 .to(directExchange)
-                .with(RabbitMQConstants.getRoutingKey(RabbitMQConstants.Exchange.DIRECT, RabbitMQConstants.Queue.BETA));
+                .with(RabbitMqConstants.getRoutingKey(RabbitMqConstants.Exchange.DIRECT, RabbitMqConstants.Queue.BETA));
     }
 
     @Bean
@@ -98,14 +98,14 @@ public class RabbitMQConfig {
     public Binding bindingAlphaQTopicEx(Queue queueAlpha, TopicExchange topicExchange) {
         return BindingBuilder.bind(queueAlpha)
                 .to(topicExchange)
-                .with(RabbitMQConstants.getRoutingKey(RabbitMQConstants.Exchange.TOPIC, RabbitMQConstants.Queue.ALPHA));
+                .with(RabbitMqConstants.getRoutingKey(RabbitMqConstants.Exchange.TOPIC, RabbitMqConstants.Queue.ALPHA));
     }
 
     @Bean
     public Binding bindingBetaQTopicEx(Queue queueBeta, TopicExchange topicExchange) {
         return BindingBuilder.bind(queueBeta)
                 .to(topicExchange)
-                .with(RabbitMQConstants.getRoutingKey(RabbitMQConstants.Exchange.TOPIC, RabbitMQConstants.Queue.BETA));
+                .with(RabbitMqConstants.getRoutingKey(RabbitMqConstants.Exchange.TOPIC, RabbitMqConstants.Queue.BETA));
     }
 
     @Bean
@@ -114,7 +114,7 @@ public class RabbitMQConfig {
         // If message is sent using topic exchange to topic_exchange.{any name} this queue will also get that message
         return BindingBuilder.bind(queueDefault)
                 .to(topicExchange)
-                .with(RabbitMQConstants.getRoutingKey(RabbitMQConstants.Exchange.TOPIC, "*"));
+                .with(RabbitMqConstants.getRoutingKey(RabbitMqConstants.Exchange.TOPIC, "*"));
     }
 
     @Bean
@@ -122,7 +122,7 @@ public class RabbitMQConfig {
         // no routing key required for header exchange.
         // message will be sent to matching header key's value
         return BindingBuilder.bind(queueAlpha)
-                .to(headersExchange).where(RabbitMQConstants.HEADER_KEY).matches(RabbitMQConstants.HeaderValue.LOW);
+                .to(headersExchange).where(RabbitMqConstants.HEADER_KEY).matches(RabbitMqConstants.HeaderValue.LOW);
     }
 
     @Bean
@@ -130,7 +130,7 @@ public class RabbitMQConfig {
         // no routing key required for header exchange.
         // message will be sent to matching header key's value
         return BindingBuilder.bind(queueBeta)
-                .to(headersExchange).where(RabbitMQConstants.HEADER_KEY).matches(RabbitMQConstants.HeaderValue.HIGH);
+                .to(headersExchange).where(RabbitMqConstants.HEADER_KEY).matches(RabbitMqConstants.HeaderValue.HIGH);
     }
 
     @Bean

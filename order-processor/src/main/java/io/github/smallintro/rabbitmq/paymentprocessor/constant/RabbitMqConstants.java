@@ -1,6 +1,6 @@
-package io.github.smallintro.orderprocessor.constant;
+package io.github.smallintro.rabbitmq.paymentprocessor.constant;
 
-public interface RabbitMQConstants {
+public interface RabbitMqConstants {
     public interface Queue {
         String ALPHA = "queue-alpha";
         String BETA = "queue-beta";

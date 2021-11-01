@@ -1,4 +1,4 @@
-package io.github.smallintro.orderprocessor.model;
+package io.github.smallintro.rabbitmq.paymentprocessor.model;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,8 +14,8 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 public class PaymentStatus {
-    @JsonProperty("paymentRequestId")
-    private String payment_request_id;
+    @JsonProperty("payment_request_id")
+    private String paymentRequestId;
 
     @JsonProperty("payment_status")
     private String paymentStatus;

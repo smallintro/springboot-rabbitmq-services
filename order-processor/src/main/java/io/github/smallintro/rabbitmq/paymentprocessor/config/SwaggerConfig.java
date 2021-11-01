@@ -1,4 +1,4 @@
-package io.github.smallintro.orderprocessor.config;
+package io.github.smallintro.rabbitmq.paymentprocessor.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +19,7 @@ public class SwaggerConfig {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.apiInfo(getApiInfo())
 				.select()
-				.apis(RequestHandlerSelectors.basePackage("io.github.smallintro.orderprocessor.controller"))
+				.apis(RequestHandlerSelectors.basePackage("io.github.smallintro.rabbitmq.paymentprocessor.controller"))
 				.paths(PathSelectors.any()).build();
 	}
 

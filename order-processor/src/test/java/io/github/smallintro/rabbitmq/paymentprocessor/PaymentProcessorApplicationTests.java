@@ -1,10 +1,10 @@
-package io.github.smallintro.orderprocessor;
+package io.github.smallintro.rabbitmq.paymentprocessor;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class OrderProcessorApplicationTests {
+class PaymentProcessorApplicationTests {
 
 	@Test
 	void contextLoads() {

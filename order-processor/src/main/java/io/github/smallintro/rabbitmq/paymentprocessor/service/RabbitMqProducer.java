@@ -1,8 +1,8 @@
-package io.github.smallintro.orderprocessor.rabbitmq;
+package io.github.smallintro.rabbitmq.paymentprocessor.service;
 
-import io.github.smallintro.orderprocessor.constant.RabbitMQConstants;
-import io.github.smallintro.orderprocessor.model.PaymentInfo;
-import io.github.smallintro.orderprocessor.model.PaymentStatus;
+import io.github.smallintro.rabbitmq.paymentprocessor.constant.RabbitMqConstants;
+import io.github.smallintro.rabbitmq.paymentprocessor.model.PaymentInfo;
+import io.github.smallintro.rabbitmq.paymentprocessor.model.PaymentStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
@@ -14,8 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RabbitMQProducer {
-    private static final Logger logger = LoggerFactory.getLogger(RabbitMQProducer.class);
+public class RabbitMqProducer {
+    private static final Logger logger = LoggerFactory.getLogger(RabbitMqProducer.class);
 
     @Autowired
     RabbitTemplate rabbitTemplate;
@@ -25,8 +25,8 @@ public class RabbitMQProducer {
         PaymentStatus paymentStatus = new PaymentStatus(requestId, "Accepted",
                 "Payment is in progress", paymentInfo);
         logger.info("Sending message to Direct Exchange -> Alpha");
-        rabbitTemplate.convertAndSend(RabbitMQConstants.Exchange.DIRECT,
-                RabbitMQConstants.getRoutingKey(RabbitMQConstants.Exchange.DIRECT, RabbitMQConstants.Queue.ALPHA),
+        rabbitTemplate.convertAndSend(RabbitMqConstants.Exchange.DIRECT,
+                RabbitMqConstants.getRoutingKey(RabbitMqConstants.Exchange.DIRECT, RabbitMqConstants.Queue.ALPHA),
                 paymentStatus);
     }
 
@@ -36,7 +36,7 @@ public class RabbitMQProducer {
                 "Payment is in progress", paymentInfo);
         logger.info("Sending message to Fanout Exchange -> All");
         // no routing key required for the fanout exchange
-        rabbitTemplate.convertAndSend(RabbitMQConstants.Exchange.FANOUT, "", paymentStatus);
+        rabbitTemplate.convertAndSend(RabbitMqConstants.Exchange.FANOUT, "", paymentStatus);
     }
 
     // Topic Exchange
@@ -47,8 +47,8 @@ public class RabbitMQProducer {
         // routing works as regex pattern. Message will be forwarded to multiple queues,
         // whose routing key partially matches with the binding key pattern
         // This message will be sent to Alpha as well as Default queue, because binding key for default queue is topic_exchange.*
-        rabbitTemplate.convertAndSend(RabbitMQConstants.Exchange.TOPIC,
-                RabbitMQConstants.getRoutingKey(RabbitMQConstants.Exchange.TOPIC, RabbitMQConstants.Queue.ALPHA),
+        rabbitTemplate.convertAndSend(RabbitMqConstants.Exchange.TOPIC,
+                RabbitMqConstants.getRoutingKey(RabbitMqConstants.Exchange.TOPIC, RabbitMqConstants.Queue.ALPHA),
                 paymentStatus);
     }
 
@@ -57,12 +57,12 @@ public class RabbitMQProducer {
         PaymentStatus paymentStatus = new PaymentStatus(requestId, "Accepted",
                 "Payment is in progress", paymentInfo);
         MessageProperties messageProperties = new MessageProperties();
-        messageProperties.setHeader(RabbitMQConstants.HEADER_KEY, paymentInfo.getPaymentPriority());
+        messageProperties.setHeader(RabbitMqConstants.HEADER_KEY, paymentInfo.getPaymentPriority());
         MessageConverter messageConverter = new Jackson2JsonMessageConverter();
         Message message = messageConverter.toMessage(paymentStatus, messageProperties);
         logger.info("Sending message to Header Exchange -> Alpha(Low), Beta(High)");
         // no routing key required for the header exchange. Routing will be done based on header property
-        rabbitTemplate.convertAndSend(RabbitMQConstants.Exchange.HEADER, "", message);
+        rabbitTemplate.convertAndSend(RabbitMqConstants.Exchange.HEADER, "", message);
     }
 
     // Default Exchange
@@ -70,7 +70,7 @@ public class RabbitMQProducer {
         PaymentStatus paymentStatus = new PaymentStatus(requestId, "Accepted",
                 "Payment is in progress", paymentInfo);
         // routing key will be queue name for default exchange. Exchange name not required
-        rabbitTemplate.convertAndSend(RabbitMQConstants.Queue.BETA, paymentStatus);
+        rabbitTemplate.convertAndSend(RabbitMqConstants.Queue.BETA, paymentStatus);
     }
 
 }
