@@ -1,4 +1,4 @@
-package io.github.smallintro.orderprocessor;
+package io.github.smallintro.rabbitmq.orderprocessor;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

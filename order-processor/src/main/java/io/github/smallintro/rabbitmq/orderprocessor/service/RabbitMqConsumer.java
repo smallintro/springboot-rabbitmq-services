@@ -1,7 +1,7 @@
-package io.github.smallintro.rabbitmq.paymentprocessor.service;
+package io.github.smallintro.rabbitmq.orderprocessor.service;
 
-import io.github.smallintro.rabbitmq.paymentprocessor.constant.RabbitMqConstants;
-import io.github.smallintro.rabbitmq.paymentprocessor.model.PaymentStatus;
+import io.github.smallintro.rabbitmq.orderprocessor.constant.RabbitMqConstants;
+import io.github.smallintro.rabbitmq.orderprocessor.model.PaymentStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;

@@ -1,4 +1,4 @@
-package io.github.smallintro.orderprocessor;
+package io.github.smallintro.rabbitmq.orderprocessor;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

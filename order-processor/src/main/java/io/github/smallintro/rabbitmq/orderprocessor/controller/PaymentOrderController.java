@@ -1,7 +1,7 @@
-package io.github.smallintro.rabbitmq.paymentprocessor.controller;
+package io.github.smallintro.rabbitmq.orderprocessor.controller;
 
-import io.github.smallintro.rabbitmq.paymentprocessor.model.PaymentInfo;
-import io.github.smallintro.rabbitmq.paymentprocessor.service.RabbitMqProducer;
+import io.github.smallintro.rabbitmq.orderprocessor.model.PaymentInfo;
+import io.github.smallintro.rabbitmq.orderprocessor.service.RabbitMqProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

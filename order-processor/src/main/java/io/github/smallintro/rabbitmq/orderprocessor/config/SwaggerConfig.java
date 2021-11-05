@@ -1,4 +1,4 @@
-package io.github.smallintro.rabbitmq.paymentprocessor.config;
+package io.github.smallintro.rabbitmq.orderprocessor.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

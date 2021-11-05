@@ -1,6 +1,8 @@
 # Payment Order Processor Service
 
-RabbitMQ is a message broker which accepts and forward the message
+RabbitMQ is an open-source message broker which accepts and forward the messages.
+AMQP is a standard protocol for interoperability between messaging middleware.
+AMQP main characteristics are: Security, Reliability, Interoperability, Open standard.
 
 - Producer publish message to the Exchange.
 - Exchange redirects the message to the Queue based on Routing Key.
@@ -29,3 +31,11 @@ Run RabbitMQ Server on Windows:
 2. Run command rabbitmq-plugins enable rabbitmq_management
 3. Access RabbitMQ Management Dashboard http://127.0.0.1:15672
 4. Login as guest user with guest password
+
+Install RabbitMQ Server using Docker and Docker-Compose:
+-------------------------------------------------------
+Check docker and docker compose version installed.
+Create a docker compose file and run command docker-compose up to download and install rabbitmq docker image.
+> $ docker -v
+> $ docker-compose -v
+> $ docker-compose up

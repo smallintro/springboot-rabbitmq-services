@@ -1,4 +1,4 @@
-package io.github.smallintro.rabbitmq.paymentprocessor.model;
+package io.github.smallintro.rabbitmq.orderprocessor.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

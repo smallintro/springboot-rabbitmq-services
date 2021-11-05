@@ -1,4 +1,4 @@
-package io.github.smallintro.rabbitmq.paymentprocessor.constant;
+package io.github.smallintro.rabbitmq.orderprocessor.constant;
 
 public interface RabbitMqConstants {
     public interface Queue {
