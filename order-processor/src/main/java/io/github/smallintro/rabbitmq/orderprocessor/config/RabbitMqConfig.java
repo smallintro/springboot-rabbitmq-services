@@ -1,20 +1,15 @@
 package io.github.smallintro.rabbitmq.orderprocessor.config;
 
 import io.github.smallintro.rabbitmq.orderprocessor.constant.RabbitMqConstants;
-import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.amqp.core.AnonymousQueue;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.FanoutExchange;
-import org.springframework.amqp.core.HeadersExchange;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.TopicExchange;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -22,20 +17,36 @@ import org.springframework.context.annotation.Configuration;
  * Configuration is same for producer and consumer
  */
 @Configuration
+@Slf4j
 public class RabbitMqConfig {
+
+    @Value("${spring.rabbitmq.host:localhost}")
+    private String host;
+
+    @Value("${spring.rabbitmq.port:5672}")
+    private Integer port;
+
+    @Value("${spring.rabbitmq.username:guest}")
+    private String username;
+
+    @Value("${spring.rabbitmq.password:guest}")
+    private String password;
 
     /**
      * ConnectionFactory is manage by Spring boot by default.
-     * We can override is really required to do so.
+     * We can override if really required to do so.
      * @return ConnectionFactory
-     *
+     */
     @Bean
     public ConnectionFactory connectionFactory() {
-        CachingConnectionFactory connectionFactory = new CachingConnectionFactory("localhost");
-        connectionFactory.setUsername("guest");
-        connectionFactory.setPassword("guest");
+        log.info("creating connection with amqp://{}:{}@{}:{}/",username, password, host, port);
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
+        connectionFactory.setHost(host);
+        connectionFactory.setPort(port);
+        connectionFactory.setUsername(username);
+        connectionFactory.setPassword(password);
         return connectionFactory;
-    }*/
+    }
 
     @Bean
     public Queue queue() {
@@ -158,6 +169,14 @@ public class RabbitMqConfig {
         final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(messageConverter());
         return rabbitTemplate;
+    }
+
+    @Bean
+    public AmqpAdmin amqpAdmin(ConnectionFactory connectionFactory){
+        AmqpAdmin rabbitAdmin = new RabbitAdmin(connectionFactory());
+        QueueBuilder queueBuilder = QueueBuilder.durable(RabbitMqConstants.Queue.BACKUP);
+        rabbitAdmin.declareQueue(queueBuilder.build());
+        return rabbitAdmin;
     }
 }
 

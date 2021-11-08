@@ -14,7 +14,8 @@ AMQP main characteristics are: Security, Reliability, Interoperability, Open sta
 - Fanout Exchange sends message to all the bound queues.
 - Topic Exchange sends message to the multiple queues where routing key partially matches with binding key.
 - Header Exchange sends message to queue based on header property key value instead of routing key. Routing key not required while binding.
-- Default Exchange sends to queue where routing key = queue name. No need to mention exchange while sending message. Its nameless exchange.
+- Default Exchange sends message to queue where routing key = queue name. No need to mention exchange while sending message. Its nameless exchange.
+- Dead Letter Exchange: If no matching queue is found then the message is silently dropped. RabbitMQ provides this Amqp exchange which captures the messages that are not deliverable.
 
 Install RabbitMQ Server on Windows:
 -----------------------------

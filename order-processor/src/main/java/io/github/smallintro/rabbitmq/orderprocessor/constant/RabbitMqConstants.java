@@ -1,13 +1,14 @@
 package io.github.smallintro.rabbitmq.orderprocessor.constant;
 
 public interface RabbitMqConstants {
-    public interface Queue {
+    interface Queue {
         String ALPHA = "queue-alpha";
         String BETA = "queue-beta";
         String DEFAULT = "queue-default";
+        String BACKUP = "queue-backup";
     }
 
-    public interface Exchange {
+    interface Exchange {
         String DIRECT = "exchange-direct";
         String FANOUT = "exchange-fanout";
         String TOPIC = "exchange-topic";
@@ -16,7 +17,7 @@ public interface RabbitMqConstants {
 
     String HEADER_KEY = "priority";
 
-    public interface HeaderValue {
+    interface HeaderValue {
         String LOW = "low";
         String HIGH = "high";
     }
