@@ -8,6 +8,7 @@ import com.rabbitmq.client.impl.SetQueue;
 import io.github.smallintro.rabbitmq.messageprocessor.constant.CommonConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -18,12 +19,30 @@ import java.util.concurrent.TimeoutException;
 @Component
 public class AmqpManager {
     private static final Logger logger = LoggerFactory.getLogger(AmqpManager.class);
+
+    @Value("${spring.rabbitmq.host:localhost}")
+    private static String host;
+
+    @Value("${spring.rabbitmq.port:5672}")
+    private static Integer port;
+
+    @Value("${spring.rabbitmq.username:guest}")
+    private static String username;
+
+    @Value("${spring.rabbitmq.password:guest}")
+    private static String password;
+
     private static Connection connection;
     private static SetQueue<Channel> channelSet = new SetQueue<>();
 
     public static Connection getConnection() throws IOException, TimeoutException {
         if (connection == null) {
+            logger.info("creating connection with amqp://{}:{}@{}:{}/",username, password, host, port);
             ConnectionFactory connectionFactory = new ConnectionFactory();
+            connectionFactory.setHost(host);
+            connectionFactory.setPort(port);
+            connectionFactory.setUsername(username);
+            connectionFactory.setPassword(password);
             connection = connectionFactory.newConnection();
             logger.info(String.format("Connection created with %s", connection.getAddress().getHostName()));
         }
